@@ -1,6 +1,6 @@
 # Fizz Buzz API Lambda
 
-This is the Schenck Process Auth Backend with TypeScript development.
+This is the Fizz Buzz API Lambda with TypeScript development.
 
 ## Documentation
 

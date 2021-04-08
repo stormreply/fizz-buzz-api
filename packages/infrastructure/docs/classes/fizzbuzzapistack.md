@@ -93,7 +93,7 @@ Name | Type |
 
 Overrides: Stack.constructor
 
-Defined in: lib/index.ts:3
+Defined in: [lib/index.ts:7](https://github.com/stormreply/fizz-buzz-api/blob/030d9a2/packages/infrastructure/lib/index.ts#L7)
 
 ## Properties
 
