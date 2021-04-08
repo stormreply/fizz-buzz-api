@@ -1,6 +1,6 @@
 {
   "name": "@stormreply/fizz-buzz-api-lambda",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "engines": {
     "node": ">=15",
     "npm": ">=7"
