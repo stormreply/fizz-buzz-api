@@ -1,12 +1,12 @@
 import 'source-map-support/register';
 
-import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from 'aws-lambda';
+import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 
-export default async (event: APIGatewayProxyEventV2): Promise<APIGatewayProxyResultV2<string>> => {
+export default async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   console.log('request:', JSON.stringify(event, undefined, 2));
 
   if (!event.body) {
-    return 'No number!';
+    return { body: 'No number!', statusCode: 400 };
   }
 
   const body = JSON.parse(event.body);
@@ -38,5 +38,5 @@ export default async (event: APIGatewayProxyEventV2): Promise<APIGatewayProxyRes
 
   // var response = { "response": outputString }
 
-  return outputString;
+  return { body: outputString, statusCode: 200 };
 };
