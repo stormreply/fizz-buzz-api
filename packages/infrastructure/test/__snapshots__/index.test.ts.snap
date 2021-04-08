@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Fizz Buzz API Stack 1`] = `
+Object {
+  "Parameters": Any<Object>,
+  "Resources": Object {
+    "FizzBuzzAPILambda7753EAB2": Object {
+      "DependsOn": Array [
+        "FizzBuzzAPILambdaServiceRole0A3C0CCB",
+      ],
+      "Properties": Object {
+        "Code": Any<Object>,
+        "Handler": "src/index.default",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "FizzBuzzAPILambdaServiceRole0A3C0CCB",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs14.x",
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "FizzBuzzAPILambdaServiceRole0A3C0CCB": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+  },
+}
+`;

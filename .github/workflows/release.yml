@@ -1,0 +1,59 @@
+name: Release
+on:
+  push:
+    branches: [main]
+jobs:
+  release:
+    if: contains(github.event.commits[0].message, '[skip ci]') == false
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GH_TOKEN }}
+      - run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+      - name: Setup Node.js with GitHub Package Registry
+        uses: actions/setup-node@v2
+        with:
+          node-version: 15
+          registry-url: "https://npm.pkg.github.com"
+          scope: "@stormreply"
+      - name: Install dependencies
+        run: npm ci && npm run bootstrap
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+      - name: Release version
+        run: npm run release
+      - name: Build sources
+        run: npm run build:production
+      - name: Lint sources
+        run: npm run lint
+      - name: Run tests
+        run: npm test
+        env:
+          CI: true
+      - name: SonarCloud Scan - Infrastructure
+        uses: SonarSource/sonarcloud-github-action@master
+        with:
+          projectBaseDir: packages/infrastructure
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: SonarCloud Scan - Lambda
+        uses: SonarSource/sonarcloud-github-action@master
+        with:
+          projectBaseDir: packages/lambda
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-central-1
+      - name: Deploy infrastructure cdk project
+        run: npm run --prefix packages/infrastructure cdk -- deploy --require-approval never

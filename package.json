@@ -1,0 +1,40 @@
+{
+  "name": "root",
+  "private": true,
+  "devDependencies": {
+    "@commitlint/cli": "^12.1.1",
+    "@commitlint/config-conventional": "^12.1.1",
+    "commitizen": "^4.2.3",
+    "cz-conventional-changelog": "^3.3.0",
+    "husky": "^6.0.0",
+    "lerna": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=15",
+    "npm": ">=7"
+  },
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "build": "lerna run build --stream",
+    "build:production": "lerna run build:production --stream",
+    "docs": "lerna run docs --stream",
+    "format": "lerna run format --stream --parallel",
+    "lerna": "lerna",
+    "lint": "lerna run lint --stream --parallel",
+    "lint:fix": "lerna run lint:fix --stream --parallel",
+    "prepare": "husky install",
+    "release": "HUSKY=0 lerna version --yes",
+    "setup": "npm i && npm run bootstrap",
+    "test": "lerna run test --stream"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}

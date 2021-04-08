@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "packages/infrastructure"
+		},
+		{
+			"path": "packages/lambda"
+		}
+	],
+	"settings": {
+		"files.exclude": {
+			"**/node_modules/**": false,
+			"packages/*/*": true
+		  }
+	}
+}
