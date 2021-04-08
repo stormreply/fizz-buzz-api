@@ -16,7 +16,7 @@ See [Lerna Bootstrap Documentation](https://github.com/lerna/lerna/tree/master/c
 
 ## Building
 To build the project, run `npm run build` in the root project (`fizz-buzz-api`).
-This command will run `npm run build` on all packages. You copuld also run `npm run build:production` which optimises for deployment.
+This command will run `npm run build` on all packages. You could also run `npm run build:production` which optimises for deployment.
 
 ## Testing
 Use this `curl` call with any number you like to test the service:
@@ -32,6 +32,10 @@ Before deployment you must run `npm run build:production` which optimises for de
 See [AWS CDK Documentation](https://docs.aws.amazon.com/cdk/api/latest/) for more information.
 
 ## SonarCloud
+
+You can find the Sonarcloud projects here:
+- [Infrastructure](https://sonarcloud.io/dashboard?id=stormreply_fizz-buzz-api_infrastructure)
+- [Lambda](https://sonarcloud.io/dashboard?id=stormreply_fizz-buzz-api_lambda)
 
 If you want to have the sonarlint result in your editor when developing put the following configuration in your user settings:
 

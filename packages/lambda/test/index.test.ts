@@ -40,7 +40,15 @@ describe('Fizz Buzz API handler', function () {
     return lambdaTester(fizzBuzzApiHandler)
       .event(({} as unknown) as APIGatewayProxyEvent)
       .expectResult((result: APIGatewayProxyResult) => {
-        expect(result).toStrictEqual({ body: 'No number!', statusCode: 400 });
+        expect(result).toStrictEqual({ body: 'No content!', statusCode: 400 });
+      });
+  });
+
+  test('verifies no number response', async () => {
+    return lambdaTester(fizzBuzzApiHandler)
+      .event(({ body: JSON.stringify({ number: 'test' }) } as unknown) as APIGatewayProxyEvent)
+      .expectResult((result: APIGatewayProxyResult) => {
+        expect(result).toStrictEqual({ body: 'Submitted data is no number!', statusCode: 400 });
       });
   });
 });
