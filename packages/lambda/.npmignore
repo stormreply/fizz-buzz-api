@@ -1,0 +1,12 @@
+build/test/*
+coverage/*
+src/*
+test/*
+
+.*
+*.config.js
+*.ts
+*.xml
+*.yaml
+*.json
+*.tgz

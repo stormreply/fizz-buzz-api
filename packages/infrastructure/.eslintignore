@@ -1,0 +1,16 @@
+# don't ever lint node_modules
+node_modules
+# don't lint build output
+build
+# don't lint nyc coverage output
+coverage
+# don't lint cdk output
+cdk.out
+# documentation
+docs
+
+CHANGELOG.md
+
+.eslintrc.js
+.prettierrc.js
+jest.config.js
