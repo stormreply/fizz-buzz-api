@@ -1,4 +1,16 @@
 {
+  "command": {
+    "publish": {
+      "conventionalCommits": true
+    },
+    "version": {
+      "allowBranch": "main",
+      "message": "chore(fizz-buzz-api): publish %v [skip ci]",
+      "noCommitHooks": true,
+      "tagVersionPrefix": ""
+    }
+  },
+  "npmClient": "npm",
   "packages": [
     "packages/*"
   ],
