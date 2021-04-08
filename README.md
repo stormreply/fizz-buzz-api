@@ -33,6 +33,10 @@ See [AWS CDK Documentation](https://docs.aws.amazon.com/cdk/api/latest/) for mor
 
 ## SonarCloud
 
+You can find the Sonarcloud projects here:
+- [Infrastructure](https://sonarcloud.io/dashboard?id=stormreply_fizz-buzz-api_infrastructure)
+- [Lambda](https://sonarcloud.io/dashboard?id=stormreply_fizz-buzz-api_lambda)
+
 If you want to have the sonarlint result in your editor when developing put the following configuration in your user settings:
 
 ``` json
