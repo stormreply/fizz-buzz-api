@@ -2,6 +2,34 @@
 
 exports[`Fizz Buzz API Stack 1`] = `
 Object {
+  "Outputs": Object {
+    "fizzbuzzapigwEndpoint09B07619": Object {
+      "Value": Object {
+        "Fn::Join": Array [
+          "",
+          Array [
+            "https://",
+            Object {
+              "Ref": "fizzbuzzapigwF07AE0EF",
+            },
+            ".execute-api.",
+            Object {
+              "Ref": "AWS::Region",
+            },
+            ".",
+            Object {
+              "Ref": "AWS::URLSuffix",
+            },
+            "/",
+            Object {
+              "Ref": "fizzbuzzapigwDeploymentStageprodC2A7592B",
+            },
+            "/",
+          ],
+        ],
+      },
+    },
+  },
   "Parameters": Any<Object>,
   "Resources": Object {
     "FizzBuzzAPILambda7753EAB2": Object {
@@ -20,6 +48,29 @@ Object {
         "Runtime": "nodejs14.x",
       },
       "Type": "AWS::Lambda::Function",
+    },
+    "FizzBuzzAPILambdaLogRetentionE3F805DB": Object {
+      "Properties": Object {
+        "LogGroupName": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "/aws/lambda/",
+              Object {
+                "Ref": "FizzBuzzAPILambda7753EAB2",
+              },
+            ],
+          ],
+        },
+        "RetentionInDays": 7,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::LogRetention",
     },
     "FizzBuzzAPILambdaServiceRole0A3C0CCB": Object {
       "Properties": Object {
@@ -51,6 +102,288 @@ Object {
         ],
       },
       "Type": "AWS::IAM::Role",
+    },
+    "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A": Object {
+      "DependsOn": Array [
+        "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRoleDefaultPolicyADDA7DEB",
+        "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB",
+      ],
+      "Properties": Object {
+        "Code": Any<Object>,
+        "Handler": "index.handler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs12.x",
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRoleDefaultPolicyADDA7DEB": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "logs:PutRetentionPolicy",
+                "logs:DeleteRetentionPolicy",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRoleDefaultPolicyADDA7DEB",
+        "Roles": Array [
+          Object {
+            "Ref": "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "fizzbuzzapigwAccount5AD8F938": Object {
+      "DependsOn": Array [
+        "fizzbuzzapigwF07AE0EF",
+      ],
+      "Properties": Object {
+        "CloudWatchRoleArn": Object {
+          "Fn::GetAtt": Array [
+            "fizzbuzzapigwCloudWatchRole6DA8C21D",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::ApiGateway::Account",
+    },
+    "fizzbuzzapigwCloudWatchRole6DA8C21D": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "apigateway.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "fizzbuzzapigwDeployment8F828184fb6ced93e510d40479661426baa742f6": Object {
+      "DependsOn": Array [
+        "fizzbuzzapigwcheckPOST6013BD5F",
+        "fizzbuzzapigwcheckC6AF16B4",
+      ],
+      "Properties": Object {
+        "Description": "Automatically created by the RestApi construct",
+        "RestApiId": Object {
+          "Ref": "fizzbuzzapigwF07AE0EF",
+        },
+      },
+      "Type": "AWS::ApiGateway::Deployment",
+    },
+    "fizzbuzzapigwDeploymentStageprodC2A7592B": Object {
+      "Properties": Object {
+        "DeploymentId": Object {
+          "Ref": "fizzbuzzapigwDeployment8F828184fb6ced93e510d40479661426baa742f6",
+        },
+        "RestApiId": Object {
+          "Ref": "fizzbuzzapigwF07AE0EF",
+        },
+        "StageName": "prod",
+      },
+      "Type": "AWS::ApiGateway::Stage",
+    },
+    "fizzbuzzapigwF07AE0EF": Object {
+      "Properties": Object {
+        "Name": "fizzbuzz-apigw",
+      },
+      "Type": "AWS::ApiGateway::RestApi",
+    },
+    "fizzbuzzapigwcheckC6AF16B4": Object {
+      "Properties": Object {
+        "ParentId": Object {
+          "Fn::GetAtt": Array [
+            "fizzbuzzapigwF07AE0EF",
+            "RootResourceId",
+          ],
+        },
+        "PathPart": "check",
+        "RestApiId": Object {
+          "Ref": "fizzbuzzapigwF07AE0EF",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "fizzbuzzapigwcheckPOST6013BD5F": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "POST",
+        "Integration": Object {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":apigateway:",
+                Object {
+                  "Ref": "AWS::Region",
+                },
+                ":lambda:path/2015-03-31/functions/",
+                Object {
+                  "Fn::GetAtt": Array [
+                    "FizzBuzzAPILambda7753EAB2",
+                    "Arn",
+                  ],
+                },
+                "/invocations",
+              ],
+            ],
+          },
+        },
+        "ResourceId": Object {
+          "Ref": "fizzbuzzapigwcheckC6AF16B4",
+        },
+        "RestApiId": Object {
+          "Ref": "fizzbuzzapigwF07AE0EF",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "fizzbuzzapigwcheckPOSTApiPermissionFizzBuzzTestStackfizzbuzzapigw9B0CC46APOSTcheckC9BD157D": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "FizzBuzzAPILambda7753EAB2",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "fizzbuzzapigwF07AE0EF",
+              },
+              "/",
+              Object {
+                "Ref": "fizzbuzzapigwDeploymentStageprodC2A7592B",
+              },
+              "/POST/check",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "fizzbuzzapigwcheckPOSTApiPermissionTestFizzBuzzTestStackfizzbuzzapigw9B0CC46APOSTcheck9BCF0CD5": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "FizzBuzzAPILambda7753EAB2",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "fizzbuzzapigwF07AE0EF",
+              },
+              "/test-invoke-stage/POST/check",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
     },
   },
 }
