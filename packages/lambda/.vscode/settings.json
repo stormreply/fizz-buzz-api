@@ -1,0 +1,5 @@
+{
+"sonarlint.connectedMode.project": {
+        "projectKey": "stormreply_fizz-buzz-api_lambda"
+    }
+}
